@@ -37,6 +37,11 @@ namespace 任务发布系统
             public static string uname;
         }
 
+        public class id
+        {
+            public static string uid;
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             try
