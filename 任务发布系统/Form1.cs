@@ -32,6 +32,11 @@ namespace 任务发布系统
 
         }
 
+        public class name
+        {
+            public static string uname;
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             try
