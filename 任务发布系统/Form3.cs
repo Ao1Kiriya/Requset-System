@@ -33,6 +33,7 @@ namespace 任务发布系统
         {
             conn = new SqlConnection(ConnecttionString);
             string strSql = null;
+            string strSql1 = null;
 
             if (radioButton1.Checked == true)
             {
@@ -55,21 +56,28 @@ namespace 任务发布系统
                         strSql += "'" + textBox1.Text;
                         strSql += "','" + textBox2.Text;
                         strSql += "','" + level + "')";
+
+                        strSql1 = "INSERT INTO [User]  VALUES(";
+                        strSql1 += "'" + textBox1.Text;
+                        strSql1 += "','" + textBox4.Text;
+                        strSql1 += "','0','0','0',' ','0')";
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("请输入完整的个人信息。");
+                        MessageBox.Show("异常错误" + ex.Message);
                         return;
                     }
                     SqlCommand command = null;
+                    SqlCommand command1 = null;
                     try
-                    {
-                        command = new SqlCommand();
-                        command.Connection = conn;
-                        command.CommandText = strSql;
+                    {  
                         conn.Open();
+                        command = new SqlCommand(strSql,conn);
+                        command1 = new SqlCommand(strSql1, conn);
+
                         int n = command.ExecuteNonQuery();
-                        if (n > 0) MessageBox.Show("创建成功！", "提示：");
+                        int k = command1.ExecuteNonQuery();
+                        if (k > 0) MessageBox.Show("创建成功！", "提示：");
                     }
                     catch (Exception ex)
                     {
