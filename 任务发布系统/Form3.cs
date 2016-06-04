@@ -60,7 +60,7 @@ namespace 任务发布系统
                         strSql1 = "INSERT INTO [User]  VALUES(";
                         strSql1 += "'" + textBox1.Text;
                         strSql1 += "','" + textBox4.Text;
-                        strSql1 += "','0','0','0',' ','0')";
+                        strSql1 += "','0','0','0','0','0','0','0')";
                     }
                     catch (Exception ex)
                     {

@@ -13,7 +13,7 @@ namespace 任务发布系统
 {
     public partial class Form1 : Form
     {
-        private string ConnecttionString = "Data Source = KALISTAR;"
+        private string ConnecttionString = "Data Source =(local);"
     + "Initial Catalog = quest;Persist Security Info = true;"
     + "Trusted_Connection=SSPI;";
         public Form1()
@@ -65,16 +65,21 @@ namespace 任务发布系统
                         string sql = string.Format("select count(*) from Login where id ='{0}' and password='{1}'", admin_id, admin_psw);
                         //查询是否有该条记录，根据账户密码
                         string usertag = string.Format("select tag from Login where id ='{0}'", admin_id);
+                        string username = string.Format("select name from [User] where id ='{0}'", admin_id);
                         SqlCommand command = new SqlCommand(sql, connection);
                         SqlCommand command1 = new SqlCommand(usertag, connection);
+                        SqlCommand command2 = new SqlCommand(username, connection);
                         //sqlcommand表示要向向数据库执行sql语句或存储过程
                         int i = Convert.ToInt32(command.ExecuteScalar());
                         string k = Convert.ToString(command1.ExecuteScalar());
+                        string j = Convert.ToString(command2.ExecuteScalar());
                         //执行后返回记录行数
                         if (i > 0)//如果大于1，说明记录存在，登录成功
                         {
                             MessageBox.Show("登录成功！");
                             tag.uTag = k;
+                            name.uname = j;
+                            id.uid = admin_id;
                             Form1 f1 = new Form1();
                             f1.Close();
                             Form2 f2 = new Form2();
