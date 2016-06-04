@@ -11,7 +11,7 @@ using System.Data.SqlClient;
 
 namespace 任务发布系统
 {
-    public partial class Form3 : Form
+    public partial class zhuce : Form
     {
         private string ConnecttionString = "Data Source = KALISTAR;"
 + "Initial Catalog = quest;Persist Security Info = true;"
@@ -19,7 +19,7 @@ namespace 任务发布系统
         private SqlConnection conn = null;
         private string level;
 
-        public Form3()
+        public zhuce()
         {
             InitializeComponent();
         }

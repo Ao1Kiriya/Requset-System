@@ -12,7 +12,7 @@ using System.Data.SqlClient;
 
 namespace 任务发布系统
 {
-    public partial class Form2 : Form
+    public partial class tasklist : Form
     {
         private string ConnecttionString = "Data Source =(local);"
    + "Initial Catalog = quest;Persist Security Info = true;"
@@ -20,7 +20,7 @@ namespace 任务发布系统
     
         
         
-        public Form2()
+        public tasklist()
         {
             InitializeComponent();
         }
@@ -32,8 +32,8 @@ namespace 任务发布系统
 
         private void Form2_Load(object sender, EventArgs e)
         {
-            label2.Text = Form1.name.uname;
-            if (Form1.tag.uTag == "1")
+            label2.Text = login.name.uname;
+            if (login.tag.uTag == "1")
             {
                 label3.Text = "同学";
             }
@@ -69,10 +69,15 @@ namespace 任务发布系统
 
         private void button4_Click(object sender, EventArgs e)
         {
-            Form5 f5 = new Form5();
+            userinfo f5 = new userinfo();
             f5.ShowDialog();
-            Form2 f2 = new Form2();
+            tasklist f2 = new tasklist();
             f2.Hide();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

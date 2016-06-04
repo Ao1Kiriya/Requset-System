@@ -1,6 +1,6 @@
 ﻿namespace 任务发布系统
 {
-    partial class Form6
+    partial class chongzhi
     {
         /// <summary>
         /// Required designer variable.

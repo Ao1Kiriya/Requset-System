@@ -10,17 +10,11 @@ using System.Windows.Forms;
 
 namespace 任务发布系统
 {
-    public partial class Form5 : Form
+    public partial class taskinfo : Form
     {
-        public Form5()
+        public taskinfo()
         {
             InitializeComponent();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Form6 f6 = new Form6();
-            f6.ShowDialog();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace 任务发布系统
 {
-    partial class Form2
+    partial class tasklist
     {
         /// <summary>
         /// Required designer variable.
@@ -56,6 +56,7 @@
             this.button2.TabIndex = 1;
             this.button2.Text = "任务详情";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button4
             // 

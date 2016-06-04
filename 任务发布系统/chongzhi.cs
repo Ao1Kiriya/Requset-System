@@ -11,9 +11,9 @@ using System.Data.SqlClient;
 
 namespace 任务发布系统
 {
-    public partial class Form6 : Form
+    public partial class chongzhi : Form
     {
-        public Form6()
+        public chongzhi()
         {
             InitializeComponent();
         }
