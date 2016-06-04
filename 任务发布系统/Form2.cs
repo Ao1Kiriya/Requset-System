@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data;
+
 using System.Data.SqlClient;
 
 namespace 任务发布系统
@@ -62,8 +62,8 @@ namespace 任务发布系统
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Form4 f4 = new Form4();
-            f4.ShowDialog();
+            //Form4 f4 = new Form4();
+            //f4.ShowDialog();
 
         }
 
