@@ -102,6 +102,11 @@ namespace 任务发布系统
                 }
         }
 
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
         
     }
 }
