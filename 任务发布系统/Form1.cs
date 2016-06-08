@@ -14,7 +14,7 @@ namespace 任务发布系统
     public partial class Form1 : Form
     {
         private string ConnecttionString = "Data Source =(local);"
-    + "Initial Catalog = quest;Persist Security Info = true;"
+    + "Initial Catalog = exchange;Persist Security Info = true;"
     + "Trusted_Connection=SSPI;";
         public Form1()
         {
@@ -62,10 +62,10 @@ namespace 任务发布系统
                         string admin_psw = textBox2.Text;//获取密码
                         SqlConnection connection = new SqlConnection(ConnecttionString);//创建连接
                         connection.Open();//打开连接
-                        string sql = string.Format("select count(*) from Login where id ='{0}' and password='{1}'", admin_id, admin_psw);
+                        string sql = string.Format("select count(*) from login where id ='{0}' and password='{1}'", admin_id, admin_psw);
                         //查询是否有该条记录，根据账户密码
-                        string usertag = string.Format("select tag from Login where id ='{0}'", admin_id);
-                        string username = string.Format("select name from [User] where id ='{0}'", admin_id);
+                        string usertag = string.Format("select tage from login where id ='{0}'", admin_id);
+                        string username = string.Format("select name from costomer where id ='{0}'", admin_id);
                         SqlCommand command = new SqlCommand(sql, connection);
                         SqlCommand command1 = new SqlCommand(usertag, connection);
                         SqlCommand command2 = new SqlCommand(username, connection);
@@ -127,6 +127,11 @@ namespace 任务发布系统
             {
                 this.button1_Click(sender, e);//触发button事件  
             }  
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

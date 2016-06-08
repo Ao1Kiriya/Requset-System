@@ -13,8 +13,8 @@ namespace 任务发布系统
 {
     public partial class Form3 : Form
     {
-        private string ConnecttionString = "Data Source = KALISTAR;"
-+ "Initial Catalog = quest;Persist Security Info = true;"
+        private string ConnecttionString = "Data Source = (local);"
++ "Initial Catalog = exchange;Persist Security Info = true;"
 + "Trusted_Connection=SSPI;";
         private SqlConnection conn = null;
         private string level;
@@ -24,12 +24,13 @@ namespace 任务发布系统
             InitializeComponent();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+
+        private void button2_Click_1(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click_1(object sender, EventArgs e)
         {
             conn = new SqlConnection(ConnecttionString);
             string strSql = null;
@@ -45,22 +46,22 @@ namespace 任务发布系统
             }
 
 
-                        if (textBox1.Text != null)
+            if (textBox1.Text != null)
             {
                 if (textBox2.Text == textBox3.Text)
                 {
 
                     try
                     {
-                        strSql = "INSERT INTO Login VALUES(";
-                        strSql += "'" + textBox1.Text;
-                        strSql += "','" + textBox2.Text;
-                        strSql += "','" + level + "')";
-
-                        strSql1 = "INSERT INTO [User]  VALUES(";
+                        strSql1 = "INSERT INTO login VALUES(";
                         strSql1 += "'" + textBox1.Text;
-                        strSql1 += "','" + textBox4.Text;
-                        strSql1 += "','0','0','0','0','0','0','0')";
+                        strSql1 += "','" + textBox2.Text;
+                        strSql1 += "','" + level + "')";
+
+                        strSql = "INSERT INTO costomer(id,name,pmoney)  VALUES(";
+                        strSql += "'" + textBox1.Text;
+                        strSql += "','" + textBox4.Text;
+                        strSql += "','0')";
                     }
                     catch (Exception ex)
                     {
@@ -70,9 +71,9 @@ namespace 任务发布系统
                     SqlCommand command = null;
                     SqlCommand command1 = null;
                     try
-                    {  
+                    {
                         conn.Open();
-                        command = new SqlCommand(strSql,conn);
+                        command = new SqlCommand(strSql, conn);
                         command1 = new SqlCommand(strSql1, conn);
 
                         int n = command.ExecuteNonQuery();
@@ -93,18 +94,13 @@ namespace 任务发布系统
                 else
                 {
                     MessageBox.Show("两次密码输入不一致！", "提示");
-                }           
+                }
 
             }
             else
-                {
-                    MessageBox.Show("用户名不能为空!","提示");
-                }
-        }
-
-        private void button2_Click_1(object sender, EventArgs e)
-        {
-            this.Close();
+            {
+                MessageBox.Show("用户名不能为空!", "提示");
+            }
         }
 
         

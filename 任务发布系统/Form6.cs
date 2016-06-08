@@ -19,7 +19,7 @@ namespace 任务发布系统
         }
        
         private string ConnecttionString = "Data Source =(local);"
-+ "Initial Catalog = quest;Persist Security Info = true;"
++ "Initial Catalog = exchange;Persist Security Info = true;"
 + "Trusted_Connection=SSPI;";
         private SqlConnection conn = null;
         private string money = null;

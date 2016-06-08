@@ -15,7 +15,7 @@ namespace 任务发布系统
     public partial class Form2 : Form
     {
         private string ConnecttionString = "Data Source =(local);"
-   + "Initial Catalog = quest;Persist Security Info = true;"
+   + "Initial Catalog = exchange;Persist Security Info = true;"
    + "Trusted_Connection=SSPI;";
     
         
@@ -43,7 +43,7 @@ namespace 任务发布系统
             SqlConnection conn = new SqlConnection(ConnecttionString);
             try
             {
-                SqlDataAdapter adapter = new SqlDataAdapter("select qno,pid,ptext,ptime,deadline,qtag,qEmp,uid,type from pquest", conn);
+                SqlDataAdapter adapter = new SqlDataAdapter("select qno,pid,ptext,ptime,ctime,true_end_time,qemp,uid,reward from Questview", conn);
                 adapter.Fill(dataset, "quest");
                 dataGridView1.DataSource = dataset;
                 dataGridView1.DataMember = "quest";
