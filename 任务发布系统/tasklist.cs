@@ -82,8 +82,6 @@ namespace 任务发布系统
             taskinfo f6 = new taskinfo(s);
             f6.Show();
 
-            taskinfo f7 = new taskinfo();
-            f7.ShowDialog();
         }
     }
 }
