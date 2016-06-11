@@ -1,6 +1,6 @@
 ﻿namespace 任务发布系统
 {
-    partial class Form3
+    partial class zhuce
     {
         /// <summary>
         /// Required designer variable.

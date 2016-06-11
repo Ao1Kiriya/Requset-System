@@ -11,12 +11,12 @@ using System.Data.SqlClient;
 
 namespace 任务发布系统
 {
-    public partial class Form1 : Form
+    public partial class login : Form
     {
         private string ConnecttionString = "Data Source =(local);"
     + "Initial Catalog = exchange;Persist Security Info = true;"
     + "Trusted_Connection=SSPI;";
-        public Form1()
+        public login()
         {
             InitializeComponent();
         }
@@ -80,9 +80,9 @@ namespace 任务发布系统
                             tag.uTag = k;
                             name.uname = j;
                             id.uid = admin_id;
-                            Form1 f1 = new Form1();
+                            login f1 = new login();
                             f1.Close();
-                            Form2 f2 = new Form2();
+                            tasklist f2 = new tasklist();
                             f2.ShowDialog();
                         }
                         else
@@ -107,9 +107,9 @@ namespace 任务发布系统
 
         private void button_Click(object sender, EventArgs e)
         {
-            Form1 f1 = new Form1();
+            login f1 = new login();
             f1.Close();
-            Form3 f3 = new Form3();
+            zhuce f3 = new zhuce();
             f3.ShowDialog();
         }
 

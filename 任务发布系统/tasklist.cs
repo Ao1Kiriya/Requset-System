@@ -7,20 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data;
+
 using System.Data.SqlClient;
 
 namespace 任务发布系统
 {
-    public partial class Form2 : Form
+    public partial class tasklist : Form
     {
         private string ConnecttionString = "Data Source =(local);"
-   + "Initial Catalog = exchange;Persist Security Info = true;"
+   + "Initial Catalog = quest;Persist Security Info = true;"
    + "Trusted_Connection=SSPI;";
     
         
         
-        public Form2()
+        public tasklist()
         {
             InitializeComponent();
         }
@@ -32,8 +32,8 @@ namespace 任务发布系统
 
         private void Form2_Load(object sender, EventArgs e)
         {
-            label2.Text = Form1.name.uname;
-            if (Form1.tag.uTag == "1")
+            label2.Text = login.name.uname;
+            if (login.tag.uTag == "1")
             {
                 label3.Text = "同学";
             }
@@ -43,7 +43,7 @@ namespace 任务发布系统
             SqlConnection conn = new SqlConnection(ConnecttionString);
             try
             {
-                SqlDataAdapter adapter = new SqlDataAdapter("select qno,pid,ptext,ptime,ctime,true_end_time,qemp,uid,reward from Questview", conn);
+                SqlDataAdapter adapter = new SqlDataAdapter("select qno,pid,ptext,ptime,deadline,qtag,qEmp,uid,type from pquest", conn);
                 adapter.Fill(dataset, "quest");
                 dataGridView1.DataSource = dataset;
                 dataGridView1.DataMember = "quest";
@@ -62,23 +62,22 @@ namespace 任务发布系统
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Form4 f4 = new Form4();
-            f4.ShowDialog();
+            //Form4 f4 = new Form4();
+            //f4.ShowDialog();
 
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            Form5 f5 = new Form5();
+            userinfo f5 = new userinfo();
             f5.ShowDialog();
-            Form2 f2 = new Form2();
+            tasklist f2 = new tasklist();
             f2.Hide();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Form7 f7 = new Form7();
-            f7.ShowDialog();
+
         }
     }
 }

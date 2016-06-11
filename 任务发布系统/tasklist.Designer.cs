@@ -1,6 +1,6 @@
 ﻿namespace 任务发布系统
 {
-    partial class Form2
+    partial class tasklist
     {
         /// <summary>
         /// Required designer variable.

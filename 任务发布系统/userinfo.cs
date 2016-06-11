@@ -10,16 +10,16 @@ using System.Windows.Forms;
 
 namespace 任务发布系统
 {
-    public partial class Form5 : Form
+    public partial class userinfo : Form
     {
-        public Form5()
+        public userinfo()
         {
             InitializeComponent();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Form6 f6 = new Form6();
+            chongzhi f6 = new chongzhi();
             f6.ShowDialog();
         }
 
