@@ -77,7 +77,13 @@ namespace 任务发布系统
 
         private void button2_Click(object sender, EventArgs e)
         {
+            int index = dataGridView1.SelectedRows[0].Index; //获取选中行的行号
+            DataGridViewRow s = dataGridView1.Rows[index];
+            taskinfo f6 = new taskinfo(s);
+            f6.Show();
 
+            taskinfo f7 = new taskinfo();
+            f7.ShowDialog();
         }
     }
 }
