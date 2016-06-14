@@ -31,7 +31,7 @@ namespace 任务发布系统
             string id = textBox1.Text;
             conn = new SqlConnection(ConnecttionString);
             conn.Open();
-            string strSql = string.Format("select money from [User] where id = '{0}'", id);
+            string strSql = string.Format("select pmoney from costomer where id = '{0}'", id);
             command = new SqlCommand(strSql, conn); 
             DialogResult RESULT = MessageBox.Show("确认?", "信息提示", MessageBoxButtons.YesNo);
             if (RESULT.ToString().Equals("Yes"))
@@ -41,13 +41,13 @@ namespace 任务发布系统
                 money1 += Convert.ToInt32(textBox2.Text);
                 money = Convert.ToString(money1);
                 
-                string strSql1 = "update [User] set money = '" +money+ "' where id = '" +id+ "'";
+                string strSql1 = "update costomer set pmoney = '" +money+ "' where id = '" +id+ "'";
                 SqlCommand command1 = null;
                 try
                 {
                     command1 = new SqlCommand(strSql1, conn);
                     int n = command1.ExecuteNonQuery();
-                    if (n > 0) MessageBox.Show("成功更新!", "提示：");
+                    if (n > 0) MessageBox.Show("成功!", "提示：");
                 }
                 catch (Exception ex)
                 {
