@@ -52,7 +52,7 @@ namespace 任务发布系统
          {
             InitializeComponent();
             taskinfo_Load();
-             //Cells[0]为要选的第几列
+            //显示数据
             string qno = str.Cells[0].Value.ToString();//任务编号
             textBox7.Text = qno;
             textBox1.Text = str.Cells[1].Value.ToString(); 
@@ -69,7 +69,7 @@ namespace 任务发布系统
          }
 
 
-        private void taskinfo_Load()
+        private void taskinfo_Load()//预载入
         {
             
             DataSet dataset = new DataSet();
@@ -111,10 +111,36 @@ namespace 任务发布系统
             }
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)//数据库单元格点击事件
         {
+            int index2 = dataGridView1.CurrentRow.Index;//获取当前记录的索引号
+
+            if (index2 != -1)
+            {
+                try
+                {
+                    SqlConnection conn = new SqlConnection(ConnectionString);
+                    DataSet dataset = new DataSet();
+
+                    String info = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                    MessageBox.Show(info);//显示当前选中的单元格的内容
+                    String s = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();//选中单元格的首列
+
+
+                    int index = dataGridView1.CurrentRow.Index;//获取当前记录的索引号
+                    //将索引为index的行设置为当前行
+                    this.dataGridView1.CurrentCell = this.dataGridView1.Rows[index].Cells[0];
+                    dataGridView1.Rows[index].Selected = true;
+                }
+                catch
+                {
+                    MessageBox.Show("选取单元格无效");
+                }
+            }
 
         }
+
+       
 
         private void label7_Click(object sender, EventArgs e)
         {
@@ -127,10 +153,6 @@ namespace 任务发布系统
             SqlConnection conn = new SqlConnection(ConnectionString);
             if (conn == null) conn.Open();
             string UserID = login.id.uid;
-               
-            string teamName = null;
-            
-            
             string strSQL = "insert into planlist(qNo,issuer,plantext,checked,selected,teamname) values(";
             strSQL += "'" + textBox7.Text;
             strSQL += "','" + UserID;//当前账号ID
@@ -170,7 +192,7 @@ namespace 任务发布系统
 
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e)//团队竞标
         {
             SqlConnection conn = new SqlConnection(ConnectionString);
             if (conn == null) conn.Open();
@@ -210,5 +232,49 @@ namespace 任务发布系统
                 command.Dispose();
             }
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            conn = new SqlConnection(ConnectionString);
+            string strSql = null;
+            int index = dataGridView1.CurrentRow.Index;//获取当前记录的索引号
+            //将索引为index的行设置为当前行
+            this.dataGridView1.CurrentCell = this.dataGridView1.Rows[index].Cells[0];
+            dataGridView1.Rows[index].Selected = true;
+            try
+            {
+                strSql = "update planlist set selected =1,checked = 1 where qNo=" +  textBox1.Text;
+                strSql += "and issuer = " + this.dataGridView1.Rows[index].Cells[1].Value.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            SqlCommand command = null;
+            
+            try
+            {
+                if (login.id.uid == textBox1.Text)
+                {
+                    command = new SqlCommand();
+                    command.Connection = conn;
+                    command.CommandText = strSql;
+                    conn.Open();
+                    int n = command.ExecuteNonQuery();
+                    if (n > 0) MessageBox.Show("成功更新数据，有" + n.ToString() + "行受到更新！");
+                }
+                else
+                    MessageBox.Show("对不起，您没有选择方案的权限");
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("发生异常:" + ex.Message);
+            }
+            
+            
+        }
+        
     }
 }
