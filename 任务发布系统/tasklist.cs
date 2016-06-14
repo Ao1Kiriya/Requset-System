@@ -43,7 +43,7 @@ namespace 任务发布系统
             SqlConnection conn = new SqlConnection(ConnecttionString);
             try
             {
-                SqlDataAdapter adapter = new SqlDataAdapter("select qno,pid,ptext,ptime,ctime,qtag,qemp,uid,reward from Questview", conn);
+                SqlDataAdapter adapter = new SqlDataAdapter("select * from Questview", conn);
                 adapter.Fill(dataset, "quest");
                 dataGridView1.DataSource = dataset;
                 dataGridView1.DataMember = "quest";
@@ -80,7 +80,7 @@ namespace 任务发布系统
             int index = dataGridView1.SelectedRows[0].Index; //获取选中行的行号
             DataGridViewRow s = dataGridView1.Rows[index];
             taskinfo f6 = new taskinfo(s);
-            f6.Show();
+            f6.ShowDialog();
 
         }
     }
