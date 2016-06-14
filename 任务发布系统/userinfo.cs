@@ -36,7 +36,7 @@ namespace 任务发布系统
             parent = f;
             InitializeComponent();
 
-            textBox1.Text = s.Cells[5].Value.ToString();
+            textBox1.Text = s.Cells[4].Value.ToString();
             textBox2.ReadOnly = true;
            // strSQL = "select name from costomer where costomer.id = " + textBox1.Text;
             conn = new SqlConnection("Data Source =(local);"
@@ -56,18 +56,21 @@ namespace 任务发布系统
                 {
                     this.textBox2.Text = obj.ToString();                   
                 }
+
                 cmd = new SqlCommand(strSQL1, conn);
                 obj = cmd.ExecuteScalar();
                 if (obj != null)
                 {
                     this.textBox3.Text = obj.ToString();
                 }
+
                 cmd = new SqlCommand(strSQL2, conn);
                 obj = cmd.ExecuteScalar();
                 if (obj != null)
                 {
                     this.textBox4.Text = obj.ToString();
                 }
+
                 cmd = new SqlCommand(strSQL3, conn);
                 obj = cmd.ExecuteScalar();
                 if (obj != null)
@@ -82,6 +85,7 @@ namespace 任务发布系统
                     adapter.Fill(dataset, "Pmember");
                     dataGridView1.DataSource = dataset;
                     dataGridView1.DataMember = "Pmember";
+                    dataGridView1.Columns[0].HeaderText = "团队名";
                 }
                 catch (Exception ex)
                 {
@@ -103,6 +107,11 @@ namespace 任务发布系统
                     adapter.Fill(dataset, "Questview");
                     dataGridView2.DataSource = dataset;
                     dataGridView2.DataMember = "Questview";
+                    dataGridView2.Columns[0].HeaderText = "任务内容";
+                    dataGridView2.Columns[1].HeaderText = "接收人id";
+                    dataGridView2.Columns[2].HeaderText = "等级";
+                    dataGridView2.Columns[3].HeaderText = "发布时间";
+                    dataGridView2.Columns[4].HeaderText = "报酬";
                 }
                 catch (Exception ex)
                 {
@@ -124,6 +133,11 @@ namespace 任务发布系统
                     adapter.Fill(dataset, "Questview");
                     dataGridView3.DataSource = dataset;
                     dataGridView3.DataMember = "Questview";
+                    dataGridView3.Columns[0].HeaderText = "任务内容";
+                    dataGridView3.Columns[1].HeaderText = "接收人id";
+                    dataGridView3.Columns[2].HeaderText = "等级";
+                    dataGridView3.Columns[3].HeaderText = "发布时间";
+                    dataGridView3.Columns[4].HeaderText = "报酬";
                 }
                 catch (Exception ex)
                 {
