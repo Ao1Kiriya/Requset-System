@@ -317,12 +317,16 @@ namespace 任务发布系统
             string ptime = DateTime.Now.ToString();
             conn = new SqlConnection(ConnecttionString);
             string strSql = null;
+            string strSql1 = null;
+            string money = null;
+            int money1 = 0;
 
             try
             {
                 strSql = "insert into Questview(pid,ptext,qtag,qemp,ptime,ctime,state,reward) values('" + login.id.uid + "','";
                 strSql += richTextBox1.Text + "','0','"+ type + "','" + ptime + "','"+ textBox1.Text + "','" +tag+ "','" + textBox2.Text + "')";
-
+                strSql1 = string.Format("select pmoney from costomer where id = '{0}'", login.id.uid);
+                
             }
             catch (Exception ex)
             {
@@ -330,12 +334,23 @@ namespace 任务发布系统
                 return;
             }
             SqlCommand command = null;
+            SqlCommand command1 = null;
+            SqlCommand command2 = null;
             try
             {
                 conn.Open();
                 command = new SqlCommand(strSql, conn);
+                command1 = new SqlCommand(strSql1, conn); 
                 int n = command.ExecuteNonQuery();
-                if (n > 0) MessageBox.Show("发布成功！", "提示：");
+                command1.ExecuteNonQuery();
+                money1 = Convert.ToInt32(command1.ExecuteScalar());
+                money1 -= Convert.ToInt32(textBox2.Text);
+                money = Convert.ToString(money1);
+                string strSql2 = "update costomer set pmoney = '" + money + "' where id = '" + login.id.uid + "'";
+                command2 = new SqlCommand(strSql2, conn);
+                int k = command2.ExecuteNonQuery();
+
+                if (k > 0) MessageBox.Show("发布成功！", "提示：");
             }
             catch (Exception ex)
             {
