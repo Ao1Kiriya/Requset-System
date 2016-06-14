@@ -237,6 +237,8 @@ namespace 任务发布系统
         {
             conn = new SqlConnection(ConnectionString);
             string strSql = null;
+            string strSQL1 = null;
+            int flag = 0;
             int index = dataGridView1.CurrentRow.Index;//获取当前记录的索引号
             //将索引为index的行设置为当前行
             this.dataGridView1.CurrentCell = this.dataGridView1.Rows[index].Cells[0];
@@ -245,6 +247,9 @@ namespace 任务发布系统
             {
                 strSql = "update planlist set selected =1,checked = 1 where qNo=" +  textBox1.Text;
                 strSql += "and issuer = " + this.dataGridView1.Rows[index].Cells[1].Value.ToString();
+                strSQL1 = "update questview set state = 1 ";
+                strSQL1+=", uid= "+ this.dataGridView1.Rows[index].Cells[1].Value.ToString();
+                strSQL1 += " where qno =" + textBox1.Text;
             }
             catch (Exception ex)
             {
@@ -262,7 +267,12 @@ namespace 任务发布系统
                     command.CommandText = strSql;
                     conn.Open();
                     int n = command.ExecuteNonQuery();
-                    if (n > 0) MessageBox.Show("成功更新数据，有" + n.ToString() + "行受到更新！");
+                    if (n > 0) { 
+                        MessageBox.Show("成功更新数据，有" + n.ToString() + "行受到更新！");
+                        flag = 1;
+                    }
+
+                    
                 }
                 else
                     MessageBox.Show("对不起，您没有选择方案的权限");
@@ -272,8 +282,26 @@ namespace 任务发布系统
             {
                 MessageBox.Show("发生异常:" + ex.Message);
             }
-            
-            
+            finally
+            {
+                if (conn != null) conn.Close();
+            }
+            if (flag == 1)
+            {
+                try
+                {
+                    SqlCommand command1 = new SqlCommand();
+                    command1.Connection = conn;
+                    command1.CommandText = strSQL1;
+                    conn.Open();
+                    int m = command1.ExecuteNonQuery();
+                    if (m > 0) MessageBox.Show("成功更新数据，有" + m.ToString() + "行受到更新！");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
         }
         
     }
