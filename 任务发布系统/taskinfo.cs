@@ -51,6 +51,7 @@ namespace 任务发布系统
          public  taskinfo(DataGridViewRow  str)//datagirdview 显示数据
          {
             InitializeComponent();
+            taskinfo_Load();
              //Cells[0]为要选的第几列
             string qno = str.Cells[0].Value.ToString();//任务编号
             textBox7.Text = qno;
@@ -68,17 +69,35 @@ namespace 任务发布系统
          }
 
 
-        private void taskinfo_Load(object sender, EventArgs e)
+        private void taskinfo_Load()
         {
             
             DataSet dataset = new DataSet();
             SqlConnection conn = new SqlConnection(ConnectionString);
             try
             { 
-                SqlDataAdapter adapter = new SqlDataAdapter("select qNo,issuer,plantext,checked,selected from planlist", conn);
+                DataAdapter = new SqlDataAdapter();
+               
+
+                string UserID = login.id.uid;
+                dataset = new DataSet();
+                string sql = "select pname from pmember where uid =" + UserID;
+                //创建数据库提供者
+                SqlDataAdapter adapter = new SqlDataAdapter(sql, conn);
                 adapter.Fill(dataset, "planlist");
-                dataGridView1.DataSource = dataset;
-                dataGridView1.DataMember = "planlist";
+                comboBox1.Text = null;
+                for (int i = 0; i < dataset.Tables["planlist"].Rows.Count; i++)
+                {
+                    DataRow dr = dataset.Tables["planlist"].Rows[i];
+                    string s = "";
+                    for (int j = 0; j < dataset.Tables["planlist"].Columns.Count; j++)
+                    {
+                        s += dr[j].ToString();
+                    }
+                    comboBox1.Items.Add(s);
+                }
+
+                dataset.Clear();
             }
             catch (Exception ex)
             {
@@ -102,34 +121,24 @@ namespace 任务发布系统
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)//个人竞标
         {
-                SqlConnection conn = new SqlConnection(ConnectionString);
-                if (conn == null) conn.Open();
-                string UserID = login.id.uid;
-                DataAdapter = new SqlDataAdapter();
-                dataset = new DataSet();
-                cmd = new SqlCommand();
-                cmd.Connection = conn;
-                cmd.CommandText = "select pname from pmember where uid ="+"UserID";
-                DataAdapter.SelectCommand = cmd;
-                DataAdapter.Fill(dataset, "t1");
-                comboBox1.Items.Clear();
-                for (int i = 0; i < dataset.Tables["t1"].Columns.Count; i++)
-                {
-                    comboBox1.Items.Add(dataset.Tables["t1"].Columns[i].ToString());
-                    
-                }    
-                dataset.Clear();
-            string teamName = comboBox1.Text;
-            string strSQL = "insert into planlist values(";
+                
+            SqlConnection conn = new SqlConnection(ConnectionString);
+            if (conn == null) conn.Open();
+            string UserID = login.id.uid;
+               
+            string teamName = null;
+            
+            
+            string strSQL = "insert into planlist(qNo,issuer,plantext,checked,selected,teamname) values(";
             strSQL += "'" + textBox7.Text;
             strSQL += "','" + UserID;//当前账号ID
             strSQL += "','" + textBox6.Text;//计划
             strSQL += "','";//有么有被查看
             strSQL += "','" ;//是否被选中
-            strSQL += "','"+teamName;//队名
-            strSQL += "')";
+           
+            strSQL += "',null)";
             MessageBox.Show(strSQL);
             
             SqlCommand command = null;
@@ -143,7 +152,6 @@ namespace 任务发布系统
                 if (n > 0)
                 {
                     MessageBox.Show("成功插入数据");
-                    Close();
                 }
             }
             catch (Exception ex)
@@ -160,6 +168,47 @@ namespace 任务发布系统
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            SqlConnection conn = new SqlConnection(ConnectionString);
+            if (conn == null) conn.Open();
+            string UserID = login.id.uid;
+
+            string teamName = comboBox1.Text;
+            string strSQL = "insert into planlist(qNo,issuer,plantext,checked,selected,teamname) values(";
+            strSQL += "'" + textBox7.Text;
+            strSQL += "','" + UserID;//当前账号ID
+            strSQL += "','" + textBox6.Text;//计划
+            strSQL += "','";//有么有被查看
+            strSQL += "','";//是否被选中
+            strSQL += "','"+teamName;
+            strSQL+="')";
+            MessageBox.Show(strSQL);
+
+            SqlCommand command = null;
+            try
+            {
+                command = new SqlCommand();
+                command.Connection = conn;
+                command.CommandText = strSQL;
+                conn.Open();
+                int n = command.ExecuteNonQuery();
+                if (n > 0)
+                {
+                    MessageBox.Show("成功插入数据");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                if (conn != null) conn.Close();
+                command.Dispose();
+            }
         }
     }
 }
