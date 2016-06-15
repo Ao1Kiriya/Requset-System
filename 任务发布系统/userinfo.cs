@@ -36,7 +36,7 @@ namespace 任务发布系统
             parent = f;
             InitializeComponent();
 
-            textBox1.Text = s.Cells[4].Value.ToString();
+            textBox1.Text = login.id.uid;
             textBox2.ReadOnly = true;
            // strSQL = "select name from costomer where costomer.id = " + textBox1.Text;
             conn = new SqlConnection("Data Source =(local);"

@@ -58,13 +58,54 @@ namespace 任务发布系统
             textBox1.Text = str.Cells[1].Value.ToString(); 
             textBox5.Text=str.Cells[2].Value.ToString();
             textBox11.Text = str.Cells[3].Value.ToString(); 
-            textBox4.Text=str.Cells[4].Value.ToString();
+            textBox4.Text=str.Cells[4].Value.ToString();//任务条件
+             //1：拥有金额为0以上
+            //2：拥有金额为30以上
+            //3：拥有金额为50以上
+            //4：拥有金额为100以上
+            if (textBox4.Text == "4")
+            {
+                textBox4.Text = "拥有金额为100以上";
+            }
+            if (textBox4.Text == "1")
+            {
+                textBox4.Text = "拥有金额为0以上";
+            }
+            if (textBox4.Text == "2")
+            {
+                textBox4.Text = "拥有金额为30以上";
+            }
+            if (textBox4.Text == "3")
+            {
+                textBox4.Text = "拥有金额为50以上";
+            }
             textBox10.Text=str.Cells[5].Value.ToString();
             textBox8.Text = str.Cells[6].Value.ToString();
             textBox2.Text = str.Cells[7].Value.ToString();
             textBox9.Text = str.Cells[8].Value.ToString();
             textBox12.Text = str.Cells[9].Value.ToString();
-            textBox3.Text = str.Cells[10].Value.ToString(); 
+            textBox3.Text = str.Cells[10].Value.ToString();
+             //任务状态：
+            //0：已发布，未接收
+            //1：任务正在进行中
+            //2：任务已完成
+            //3：任务状态异常
+            if (textBox12.Text == "0")
+            {
+                textBox12.Text = "已发布，未接收";
+            }
+            if (textBox12.Text == "1")
+            {
+                textBox12.Text = "任务正在进行中";
+            }
+            if (textBox12.Text == "2")
+            {
+                textBox12.Text = "任务已完成";
+            }
+            if (textBox12.Text == "3")
+            {
+                textBox12.Text = "任务状态异常";
+            }
             showdata(qno);
          }
 
@@ -163,28 +204,71 @@ namespace 任务发布系统
             strSQL += "',null)";
             MessageBox.Show(strSQL);
             
-            SqlCommand command = null;
+            int result;
+            string str1, str2;
+            str1 = textBox4.Text;
+            str2 = login.Ureward.Umoney;
+            decimal s2 =0;
+            decimal s1 =1;
+            if (textBox4.Text == "拥有金额为100以上")
+            {
+                str1 = "100";
+            }
+            if (textBox4.Text == "拥有金额为0以上")
+            {
+                str1 = "0";
+            }
+            if (textBox4.Text == "拥有金额为30以上")
+            {
+                str1 = "30";
+            }
+            if (textBox4.Text == "拥有金额为50以上")
+            {
+                str1 = "50";
+            }
+            result=string.Compare(str2,str1);
             try
             {
-                command = new SqlCommand();
-                command.Connection = conn;
-                command.CommandText = strSQL;
-                conn.Open();
-                int n = command.ExecuteNonQuery();
-                if (n > 0)
-                {
-                    MessageBox.Show("成功插入数据");
-                }
+                s1=decimal.Parse(str1);
+                s2 = decimal.Parse(str2);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-            finally
-            {
-                if (conn != null) conn.Close();
-                command.Dispose();
+            
+
+            SqlCommand command = null;
+            if(s2>=s1){
+                try
+                            {
+                                command = new SqlCommand();
+                                command.Connection = conn;
+                                command.CommandText = strSQL;
+                                conn.Open();
+                                int n = command.ExecuteNonQuery();
+                                if (n > 0)
+                                {
+                                    MessageBox.Show("成功插入数据");
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show(ex.Message);
+                            }
+                            finally
+                            {
+                                if (conn != null) conn.Close();
+                                command.Dispose();
+                            } 
             }
+            else
+                MessageBox.Show("您没有足够的资本来接受这个任务");
+           
+            
+        
+                
+            
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -209,27 +293,65 @@ namespace 任务发布系统
             strSQL+="')";
             MessageBox.Show(strSQL);
 
-            SqlCommand command = null;
+            int result;
+            string str1, str2;
+            str1 = textBox4.Text;
+
+            str2 = login.Ureward.Umoney;//
+            decimal s2 = 0;
+            decimal s1 = 1;
+            if (textBox4.Text == "拥有金额为100以上")
+            {
+                str1 = "100";
+            }
+            if (textBox4.Text == "拥有金额为0以上")
+            {
+                str1 = "0";
+            }
+            if (textBox4.Text == "拥有金额为30以上")
+            {
+                str1 = "30";
+            }
+            if (textBox4.Text == "拥有金额为50以上")
+            {
+                str1 = "50";
+            }
+            result = string.Compare(str2, str1);
             try
             {
-                command = new SqlCommand();
-                command.Connection = conn;
-                command.CommandText = strSQL;
-                conn.Open();
-                int n = command.ExecuteNonQuery();
-                if (n > 0)
-                {
-                    MessageBox.Show("成功插入数据");
-                }
+                s1 = decimal.Parse(str1);
+                s2 = decimal.Parse(str2);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-            finally
+            
+
+            SqlCommand command = null;
+            if (s2 >= s1)
             {
-                if (conn != null) conn.Close();
-                command.Dispose();
+                try
+                {
+                    command = new SqlCommand();
+                    command.Connection = conn;
+                    command.CommandText = strSQL;
+                    conn.Open();
+                    int n = command.ExecuteNonQuery();
+                    if (n > 0)
+                    {
+                        MessageBox.Show("成功插入数据");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                finally
+                {
+                    if (conn != null) conn.Close();
+                    command.Dispose();
+                }
             }
         }
 

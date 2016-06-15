@@ -65,7 +65,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(186, 18);
+            this.label1.Location = new System.Drawing.Point(198, 16);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(41, 12);
             this.label1.TabIndex = 0;
@@ -74,7 +74,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(545, 18);
+            this.label2.Location = new System.Drawing.Point(545, 16);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 12);
             this.label2.TabIndex = 1;
@@ -83,7 +83,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(67, 49);
+            this.label3.Location = new System.Drawing.Point(65, 49);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(29, 12);
             this.label3.TabIndex = 3;
@@ -117,7 +117,7 @@
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(604, 15);
+            this.textBox2.Location = new System.Drawing.Point(604, 12);
             this.textBox2.Name = "textBox2";
             this.textBox2.ReadOnly = true;
             this.textBox2.Size = new System.Drawing.Size(100, 21);
@@ -191,9 +191,9 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(276, 483);
+            this.button1.Location = new System.Drawing.Point(224, 488);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(94, 31);
             this.button1.TabIndex = 15;
             this.button1.Text = "个人竞标";
             this.button1.UseVisualStyleBackColor = true;
@@ -201,9 +201,9 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(629, 491);
+            this.button2.Location = new System.Drawing.Point(612, 483);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.Size = new System.Drawing.Size(92, 35);
             this.button2.TabIndex = 16;
             this.button2.Text = "团队竞标";
             this.button2.UseVisualStyleBackColor = true;
@@ -212,7 +212,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(67, 18);
+            this.label8.Location = new System.Drawing.Point(65, 16);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(41, 12);
             this.label8.TabIndex = 17;
@@ -228,7 +228,7 @@
             // 
             // textBox8
             // 
-            this.textBox8.Location = new System.Drawing.Point(442, 12);
+            this.textBox8.Location = new System.Drawing.Point(439, 12);
             this.textBox8.Name = "textBox8";
             this.textBox8.ReadOnly = true;
             this.textBox8.Size = new System.Drawing.Size(100, 21);
@@ -237,7 +237,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(375, 23);
+            this.label9.Location = new System.Drawing.Point(367, 16);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(53, 12);
             this.label9.TabIndex = 20;
@@ -246,7 +246,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(357, 55);
+            this.label10.Location = new System.Drawing.Point(357, 49);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(77, 12);
             this.label10.TabIndex = 21;
@@ -255,7 +255,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(547, 55);
+            this.label11.Location = new System.Drawing.Point(545, 49);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(53, 12);
             this.label11.TabIndex = 22;
@@ -264,7 +264,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(69, 88);
+            this.label12.Location = new System.Drawing.Point(55, 87);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(53, 12);
             this.label12.TabIndex = 23;
@@ -281,7 +281,7 @@
             // 
             // textBox9
             // 
-            this.textBox9.Location = new System.Drawing.Point(441, 55);
+            this.textBox9.Location = new System.Drawing.Point(439, 46);
             this.textBox9.Name = "textBox9";
             this.textBox9.ReadOnly = true;
             this.textBox9.Size = new System.Drawing.Size(100, 21);
@@ -289,7 +289,7 @@
             // 
             // textBox10
             // 
-            this.textBox10.Location = new System.Drawing.Point(604, 55);
+            this.textBox10.Location = new System.Drawing.Point(604, 46);
             this.textBox10.Name = "textBox10";
             this.textBox10.ReadOnly = true;
             this.textBox10.Size = new System.Drawing.Size(100, 21);
@@ -297,7 +297,7 @@
             // 
             // textBox11
             // 
-            this.textBox11.Location = new System.Drawing.Point(127, 87);
+            this.textBox11.Location = new System.Drawing.Point(127, 84);
             this.textBox11.Name = "textBox11";
             this.textBox11.ReadOnly = true;
             this.textBox11.Size = new System.Drawing.Size(55, 21);
@@ -305,7 +305,7 @@
             // 
             // textBox12
             // 
-            this.textBox12.Location = new System.Drawing.Point(251, 88);
+            this.textBox12.Location = new System.Drawing.Point(251, 84);
             this.textBox12.Name = "textBox12";
             this.textBox12.ReadOnly = true;
             this.textBox12.Size = new System.Drawing.Size(100, 21);
@@ -315,7 +315,7 @@
             // 
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(500, 491);
+            this.comboBox1.Location = new System.Drawing.Point(485, 491);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 20);
             this.comboBox1.TabIndex = 29;
@@ -324,9 +324,10 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(405, 494);
+            this.label14.Font = new System.Drawing.Font("迷你简毡笔黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label14.Location = new System.Drawing.Point(347, 493);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(89, 12);
+            this.label14.Size = new System.Drawing.Size(120, 18);
             this.label14.TabIndex = 30;
             this.label14.Text = "请选择一个团队";
             // 

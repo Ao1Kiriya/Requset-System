@@ -41,6 +41,10 @@ namespace 任务发布系统
         {
             public static string uid;
         }
+        public class Ureward
+        {
+            public static string Umoney;
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -66,13 +70,16 @@ namespace 任务发布系统
                         //查询是否有该条记录，根据账户密码
                         string usertag = string.Format("select tage from login where id ='{0}'", admin_id);
                         string username = string.Format("select name from costomer where id ='{0}'", admin_id);
+                        string usermoney = string.Format("select pmoney from costomer where id ='{0}'", admin_id);
                         SqlCommand command = new SqlCommand(sql, connection);
                         SqlCommand command1 = new SqlCommand(usertag, connection);
                         SqlCommand command2 = new SqlCommand(username, connection);
+                        SqlCommand command3 = new SqlCommand(usermoney, connection);
                         //sqlcommand表示要向向数据库执行sql语句或存储过程
                         int i = Convert.ToInt32(command.ExecuteScalar());
                         string k = Convert.ToString(command1.ExecuteScalar());
                         string j = Convert.ToString(command2.ExecuteScalar());
+                        string m=  Convert.ToString(command3.ExecuteScalar());
                         //执行后返回记录行数
                         if (i > 0)//如果大于1，说明记录存在，登录成功
                         {
@@ -80,6 +87,7 @@ namespace 任务发布系统
                             tag.uTag = k;
                             name.uname = j;
                             id.uid = admin_id;
+                            Ureward.Umoney=m;
                             login f1 = new login();
                             f1.Close();
                             tasklist f2 = new tasklist();
