@@ -70,8 +70,8 @@ namespace 任务发布系统
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.radioButton6 = new System.Windows.Forms.RadioButton();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -96,6 +96,7 @@ namespace 任务发布系统
             this.radioButton1.TabStop = true;
             this.radioButton1.Text = "1类";
             this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.Click += new System.EventHandler(this.radioButton1_Click);
             // 
             // radioButton2
             // 
@@ -106,6 +107,7 @@ namespace 任务发布系统
             this.radioButton2.TabIndex = 2;
             this.radioButton2.Text = "2类";
             this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton2.Click += new System.EventHandler(this.radioButton2_Click);
             // 
             // radioButton3
             // 
@@ -116,6 +118,7 @@ namespace 任务发布系统
             this.radioButton3.TabIndex = 3;
             this.radioButton3.Text = "3类";
             this.radioButton3.UseVisualStyleBackColor = true;
+            this.radioButton3.Click += new System.EventHandler(this.radioButton3_Click);
             // 
             // richTextBox1
             // 
@@ -154,7 +157,7 @@ namespace 任务发布系统
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(202, 297);
+            this.button1.Location = new System.Drawing.Point(207, 308);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 8;
@@ -235,15 +238,7 @@ namespace 任务发布系统
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(95, 146);
             this.panel1.TabIndex = 17;
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.radioButton5);
-            this.panel2.Controls.Add(this.radioButton4);
-            this.panel2.Location = new System.Drawing.Point(111, 247);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(304, 55);
-            this.panel2.TabIndex = 4;
+            this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
             // 
             // radioButton6
             // 
@@ -254,6 +249,16 @@ namespace 任务发布系统
             this.radioButton6.TabIndex = 14;
             this.radioButton6.Text = "4类";
             this.radioButton6.UseVisualStyleBackColor = true;
+            this.radioButton6.Click += new System.EventHandler(this.radioButton6_Click);
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.radioButton5);
+            this.panel2.Controls.Add(this.radioButton4);
+            this.panel2.Location = new System.Drawing.Point(111, 247);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(304, 55);
+            this.panel2.TabIndex = 4;
             // 
             // pquest
             // 
@@ -314,53 +319,99 @@ namespace 任务发布系统
             }
             else type = "Party";
 
-            string ptime = DateTime.Now.ToString();
-            conn = new SqlConnection(ConnecttionString);
-            string strSql = null;
-            string strSql1 = null;
-            string money = null;
-            int money1 = 0;
+            int m = Convert.ToInt32(textBox2.Text);
+            if (tag == "2" && m < 30) MessageBox.Show("报酬至少为30");
+            else if (tag == "3" && m < 50) MessageBox.Show("报酬至少为50");
+            else if (tag == "4" && m < 100) MessageBox.Show("报酬至少为100");
+            else
+            {
+                string ptime = DateTime.Now.ToString();
+                conn = new SqlConnection(ConnecttionString);
+                string strSql = null;
+                string strSql1 = null;
+                string money = null;
+                int money1 = 0;
 
-            try
-            {
-                strSql = "insert into Questview(pid,ptext,qtag,qemp,ptime,ctime,state,reward) values('" + login.id.uid + "','";
-                strSql += richTextBox1.Text + "','0','"+ type + "','" + ptime + "','"+ textBox1.Text + "','" +tag+ "','" + textBox2.Text + "')";
-                strSql1 = string.Format("select pmoney from costomer where id = '{0}'", login.id.uid);
-                
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("异常错误" + ex.Message);
-                return;
-            }
-            SqlCommand command = null;
-            SqlCommand command1 = null;
-            SqlCommand command2 = null;
-            try
-            {
-                conn.Open();
-                command = new SqlCommand(strSql, conn);
-                command1 = new SqlCommand(strSql1, conn); 
-                int n = command.ExecuteNonQuery();
-                command1.ExecuteNonQuery();
-                money1 = Convert.ToInt32(command1.ExecuteScalar());
-                money1 -= Convert.ToInt32(textBox2.Text);
-                money = Convert.ToString(money1);
-                string strSql2 = "update costomer set pmoney = '" + money + "' where id = '" + login.id.uid + "'";
-                command2 = new SqlCommand(strSql2, conn);
-                int k = command2.ExecuteNonQuery();
+                try
+                {
+                    strSql = "insert into Questview(pid,ptext,qtag,qemp,ptime,ctime,state,reward) values('" + login.id.uid + "','";
+                    strSql += richTextBox1.Text + "','0','" + type + "','" + ptime + "','" + textBox1.Text + "','" + tag + "','" + textBox2.Text + "')";
+                    strSql1 = string.Format("select pmoney from costomer where id = '{0}'", login.id.uid);
 
-                if (k > 0) MessageBox.Show("发布成功！", "提示：");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("异常错误" + ex.Message);
+                    return;
+                }
+                SqlCommand command = null;
+                SqlCommand command1 = null;
+                SqlCommand command2 = null;
+                try
+                {
+                    conn.Open();
+                    command = new SqlCommand(strSql, conn);
+                    command1 = new SqlCommand(strSql1, conn);
+                    int n = command.ExecuteNonQuery();
+                    command1.ExecuteNonQuery();
+                    money1 = Convert.ToInt32(command1.ExecuteScalar());
+                    money1 -= Convert.ToInt32(textBox2.Text);
+                    money = Convert.ToString(money1);
+                    string strSql2 = "update costomer set pmoney = '" + money + "' where id = '" + login.id.uid + "'";
+                    command2 = new SqlCommand(strSql2, conn);
+                    int k = command2.ExecuteNonQuery();
+
+                    if (k > 0) MessageBox.Show("发布成功！", "提示：");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("发生异常:" + ex.Message);
+                }
+                finally
+                {
+                    if (conn != null) conn.Close();
+                    command.Dispose();
+                    this.Close();
+                }
             }
-            catch (Exception ex)
+        }
+
+        private void panel1_MouseDown(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void radioButton1_Click(object sender, EventArgs e)
+        {
+            if (radioButton1.Checked == true)
             {
-                MessageBox.Show("发生异常:" + ex.Message);
+                textBox2.Text = "0";
             }
-            finally
+        }
+
+        private void radioButton2_Click(object sender, EventArgs e)
+        {
+            if (radioButton2.Checked == true)
             {
-                if (conn != null) conn.Close();
-                command.Dispose();
-                this.Close();
+                textBox2.Text = "30";
+            }
+        }
+
+        private void radioButton3_Click(object sender, EventArgs e)
+        {
+
+            if (radioButton3.Checked == true)
+            {
+                textBox2.Text = "50";
+            }
+
+        }
+
+        private void radioButton6_Click(object sender, EventArgs e)
+        {
+            if (radioButton6.Checked == true)
+            {
+                textBox2.Text = "100";
             }
         }
     }
