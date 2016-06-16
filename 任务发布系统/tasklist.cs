@@ -70,17 +70,16 @@ namespace 任务发布系统
         }
 
         private void button4_Click(object sender, EventArgs e)
-        {
-            //userinfo f5 = new userinfo();
-            //f5.ShowDialog();
-            //tasklist f2 = new tasklist();
-            //f2.Hide();
-            index = dataGridView1.SelectedRows[0].Index;
-            if (index == -1)
-                ShowDialog();
+        {            
+            int a = dataGridView1.CurrentRow.Index;
+            string str = dataGridView1.Rows[a].Cells["pid"].Value.ToString();
 
-            DataGridViewRow s = dataGridView1.Rows[index];
-            userinfo f5 = new userinfo(s, this);
+            //index = dataGridView1.SelectedRows[0].Index;
+            //if (index == -1)
+            //    ShowDialog();
+
+            //DataGridViewRow s = dataGridView1.Rows[index];
+            userinfo f5 = new userinfo(str, this);
             f5.ShowDialog();
             this.Hide();
         }

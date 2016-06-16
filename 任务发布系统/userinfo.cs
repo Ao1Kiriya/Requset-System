@@ -26,17 +26,19 @@ namespace 任务发布系统
         String strSQL4 = "";
         String strSQL5 = "";
         private tasklist parent;
-        private DataGridViewRow s;
+       // private DataGridViewRow s;
+        string s;
         private DataSet dataset = null;
         private SqlDataAdapter DataAdapter = null;
-        public userinfo(DataGridViewRow s,tasklist f)
+        public userinfo(string s,tasklist f)
         {
             
             this.s = s;
             parent = f;
             InitializeComponent();
 
-            textBox1.Text = login.id.uid;
+            //textBox1.Text = s.Cells[4].Value.ToString();
+            textBox1.Text = s;
             textBox2.ReadOnly = true;
            // strSQL = "select name from costomer where costomer.id = " + textBox1.Text;
             conn = new SqlConnection("Data Source =(local);"
@@ -81,7 +83,8 @@ namespace 任务发布系统
                 DataSet dataset = new DataSet();               
                 try
                 {
-                    SqlDataAdapter adapter = new SqlDataAdapter("select distinct pname from Pmember", conn);
+                    strSQL = "select distinct pname from Pmember where uid = " + textBox1.Text;
+                    SqlDataAdapter adapter = new SqlDataAdapter(strSQL, conn);
                     adapter.Fill(dataset, "Pmember");
                     dataGridView1.DataSource = dataset;
                     dataGridView1.DataMember = "Pmember";
@@ -98,7 +101,7 @@ namespace 任务发布系统
                     dataset.Dispose();
                 }
 
-                strSQL4 = "select Ptext,Uid,Qtag,Ptime,Reward from Questview where Pid = " + textBox1.Text;
+                strSQL4 = "select Ptext,Uid,Qtag,Ptime,Reward from Questview where state = '0' and Pid = " + textBox1.Text;
                 dataset = new DataSet();
                 conn = new SqlConnection(ConnectionString);
                 try
@@ -124,7 +127,7 @@ namespace 任务发布系统
                     dataset.Dispose();
                 }
 
-                strSQL5 = "select Ptext,Uid,Qtag,Ptime,Reward from Questview where state = '1' and Pid = " + textBox1.Text;
+                strSQL5 = "select qno,Ptext,Uid,Qtag,Ptime,Reward from Questview where state = '1' and Pid = " + textBox1.Text;
                 dataset = new DataSet();
                 conn = new SqlConnection(ConnectionString);
                 try
@@ -133,11 +136,12 @@ namespace 任务发布系统
                     adapter.Fill(dataset, "Questview");
                     dataGridView3.DataSource = dataset;
                     dataGridView3.DataMember = "Questview";
-                    dataGridView3.Columns[0].HeaderText = "任务内容";
-                    dataGridView3.Columns[1].HeaderText = "接收人id";
-                    dataGridView3.Columns[2].HeaderText = "等级";
-                    dataGridView3.Columns[3].HeaderText = "发布时间";
-                    dataGridView3.Columns[4].HeaderText = "报酬";
+                    dataGridView3.Columns[0].HeaderText = "任务序号";
+                    dataGridView3.Columns[1].HeaderText = "任务内容";
+                    dataGridView3.Columns[2].HeaderText = "接收人id";
+                    dataGridView3.Columns[3].HeaderText = "等级";
+                    dataGridView3.Columns[4].HeaderText = "发布时间";
+                    dataGridView3.Columns[5].HeaderText = "报酬";
                 }
                 catch (Exception ex)
                 {
@@ -254,6 +258,37 @@ namespace 任务发布系统
             tasklist f2 = new tasklist();
             f2.Show();
             this.Close();           
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            conn = new SqlConnection("Data Source =(local);"
+        + "Initial Catalog = exchange;Persist Security Info = true;" + "Trusted_Connection=SSPI;");
+            conn.Open();
+
+            int a = dataGridView3.CurrentRow.Index;         
+            string p = dataGridView3.Rows[a].Cells["qno"].Value.ToString();
+            double money = double.Parse(dataGridView3.Rows[a].Cells["reward"].Value.ToString());
+            string id = dataGridView3.Rows[a].Cells["Uid"].Value.ToString();
+            Double addmoney = 0;
+
+            strSQL = "select pmoney from costomer where  id = " + id;                     
+            SqlCommand cmd = new SqlCommand(strSQL, conn);
+            object obj = cmd.ExecuteScalar();
+            if (obj != null)
+            {                           
+                double i = double.Parse(obj.ToString());
+                addmoney =  money + i; 
+            }
+            
+            strSQL = "UPDATE costomer SET pmoney = " +addmoney + "WHERE id = " + id + "UPDATE Questview SET state = 0 WHERE  qno = '" + p + "'" ;
+            //strSQL = "UPDATE Questview SET state = 0 WHERE  qno = '" + p + "'";
+            cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = strSQL;         ;
+            int n = cmd.ExecuteNonQuery();
+            if (n > 0) MessageBox.Show("任务完成!");
+            
         }
     }
 }

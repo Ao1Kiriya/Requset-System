@@ -48,6 +48,7 @@
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.label8 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.button2 = new System.Windows.Forms.Button();
             label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
@@ -67,7 +68,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(488, 332);
+            this.button1.Location = new System.Drawing.Point(487, 226);
             this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(135, 54);
@@ -155,7 +156,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(512, 461);
+            this.button4.Location = new System.Drawing.Point(512, 363);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(111, 72);
             this.button4.TabIndex = 18;
@@ -229,11 +230,22 @@
             this.pictureBox1.TabIndex = 25;
             this.pictureBox1.TabStop = false;
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(512, 495);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(110, 47);
+            this.button2.TabIndex = 26;
+            this.button2.Text = "任务完成";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click_1);
+            // 
             // userinfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(635, 573);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.dataGridView3);
@@ -285,5 +297,6 @@
         private System.Windows.Forms.DataGridView dataGridView3;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button button2;
     }
 }
