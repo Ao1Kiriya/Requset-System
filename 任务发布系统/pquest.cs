@@ -43,7 +43,7 @@ namespace 任务发布系统
         }
 
         public string tag;
-        public string type;
+        public int type;
         private void Form4_Load(object sender, EventArgs e)
         {
             
@@ -315,9 +315,9 @@ namespace 任务发布系统
 
             if (radioButton4.Checked == true)
             {
-                type = "Single";
+                type = 1;
             }
-            else type = "Party";
+            else type =2;
 
             int m = Convert.ToInt32(textBox2.Text);
             if (tag == "2" && m < 30) MessageBox.Show("报酬至少为30");
@@ -335,7 +335,7 @@ namespace 任务发布系统
                 try
                 {
                     strSql = "insert into Questview(pid,ptext,qtag,qemp,ptime,ctime,state,reward) values('" + login.id.uid + "','";
-                    strSql += richTextBox1.Text + "','0','" + type + "','" + ptime + "','" + textBox1.Text + "','" + tag + "','" + textBox2.Text + "')";
+                    strSql += richTextBox1.Text + "','" + type + "',NULL,'" + ptime + "','" + textBox1.Text + "','" + tag + "','" + textBox2.Text + "')";
                     strSql1 = string.Format("select pmoney from costomer where id = '{0}'", login.id.uid);
 
                 }
