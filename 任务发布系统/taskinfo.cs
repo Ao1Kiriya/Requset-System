@@ -296,8 +296,21 @@ namespace 任务发布系统
             int result;
             string str1, str2;
             str1 = textBox4.Text;
+          
+            string teammoney = string.Format("select pmoney from party where pname ='{0}'", teamName);
+            //SqlCommand command3 = new SqlCommand(teammoney, conn);
+            //string tm = Convert.ToString(command3.ExecuteScalar());
 
-            str2 = login.Ureward.Umoney;//
+            SqlCommand command = null;
+            command = new SqlCommand();
+            command.Connection = conn;
+            command.CommandText = teammoney;
+            conn.Open();
+            SqlDataReader sdr = command.ExecuteReader();//cmd 是sqlcommand
+            sdr.Read();
+            string tm = sdr["pmoney"].ToString();
+
+            str2 =tm;//
             decimal s2 = 0;
             decimal s1 = 1;
             if (textBox4.Text == "拥有金额为100以上")
@@ -326,9 +339,9 @@ namespace 任务发布系统
             {
                 MessageBox.Show(ex.Message);
             }
-            
+            conn.Close();
 
-            SqlCommand command = null;
+            
             if (s2 >= s1)
             {
                 try
@@ -353,9 +366,11 @@ namespace 任务发布系统
                     command.Dispose();
                 }
             }
+            else
+                MessageBox.Show("您的团队没有足够的资本来接受这个任务");
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void button3_Click(object sender, EventArgs e)//选择最终方案
         {
             conn = new SqlConnection(ConnectionString);
             string strSql = null;
@@ -380,6 +395,8 @@ namespace 任务发布系统
             }
             SqlCommand command = null;
             
+
+
             try
             {
                 if (login.id.uid == textBox1.Text)
