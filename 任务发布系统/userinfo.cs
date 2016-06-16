@@ -101,7 +101,7 @@ namespace 任务发布系统
                     dataset.Dispose();
                 }
 
-                strSQL4 = "select Ptext,Uid,Qtag,Ptime,Reward from Questview where state = '0' and Pid = " + textBox1.Text;
+                strSQL4 = "select Ptext,Uid,Qtag,Ptime,Reward from Questview where  Pid = " + textBox1.Text;
                 dataset = new DataSet();
                 conn = new SqlConnection(ConnectionString);
                 try
