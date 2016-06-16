@@ -127,7 +127,7 @@ namespace 任务发布系统
                     dataset.Dispose();
                 }
 
-                strSQL5 = "select qno,Ptext,Uid,Qtag,Ptime,Reward from Questview where state = '1' and Pid = " + textBox1.Text;
+                strSQL5 = "select qno,Ptext,Uid,Qtag,Ptime,Reward ,pid from Questview where state = '1' and Pid = " + textBox1.Text;
                 dataset = new DataSet();
                 conn = new SqlConnection(ConnectionString);
                 try
@@ -142,6 +142,7 @@ namespace 任务发布系统
                     dataGridView3.Columns[3].HeaderText = "等级";
                     dataGridView3.Columns[4].HeaderText = "发布时间";
                     dataGridView3.Columns[5].HeaderText = "报酬";
+                    dataGridView3.Columns[6].HeaderText = "用户id";
                 }
                 catch (Exception ex)
                 {
@@ -270,18 +271,29 @@ namespace 任务发布系统
             string p = dataGridView3.Rows[a].Cells["qno"].Value.ToString();
             double money = double.Parse(dataGridView3.Rows[a].Cells["reward"].Value.ToString());
             string id = dataGridView3.Rows[a].Cells["Uid"].Value.ToString();
+            string pid = dataGridView3.Rows[a].Cells["pid"].Value.ToString();
             Double addmoney = 0;
+            double demoney = 0;
+            double i = 0;
 
             strSQL = "select pmoney from costomer where  id = " + id;                     
             SqlCommand cmd = new SqlCommand(strSQL, conn);
             object obj = cmd.ExecuteScalar();
             if (obj != null)
             {                           
-                double i = double.Parse(obj.ToString());
-                addmoney =  money + i; 
+                i = double.Parse(obj.ToString());
+                addmoney =  money + i;                 
             }
-            
-            strSQL = "UPDATE costomer SET pmoney = " +addmoney + "WHERE id = " + id + "UPDATE Questview SET state = 0 WHERE  qno = '" + p + "'" ;
+            strSQL = "select pmoney from costomer where  id = " + pid ;
+            cmd = new SqlCommand(strSQL, conn);
+            object obj1 = cmd.ExecuteScalar();
+            if (obj1 != null)
+            {
+                double s = double.Parse(obj.ToString());
+                demoney = s - i ;
+            }
+
+            strSQL = "UPDATE costomer SET pmoney = " + addmoney + "WHERE id = " + id + "UPDATE Questview SET state = 0 WHERE  qno = '" + p + "'" + "UPDATE costomer SET pmoney = " + demoney + "WHERE id  = " + pid;
             //strSQL = "UPDATE Questview SET state = 0 WHERE  qno = '" + p + "'";
             cmd = new SqlCommand();
             cmd.Connection = conn;
