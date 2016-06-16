@@ -27,15 +27,14 @@ namespace 任务发布系统
         private Label label3;
         private Button button1;
         private Label label5;
-        private TextBox textBox1;
         private RadioButton radioButton4;
         private RadioButton radioButton5;
         private Label label7;
         private TextBox textBox2;
-        private Label label6;
         private Panel panel1;
         private Panel panel2;
         private RadioButton radioButton6;
+        private DateTimePicker dateTimePicker1;
         private SqlConnection conn = null;
         public pquest()
         {
@@ -43,7 +42,7 @@ namespace 任务发布系统
         }
 
         public string tag;
-        public string type;
+        public int type;
         private void Form4_Load(object sender, EventArgs e)
         {
             
@@ -63,15 +62,14 @@ namespace 任务发布系统
             this.label3 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.radioButton4 = new System.Windows.Forms.RadioButton();
             this.radioButton5 = new System.Windows.Forms.RadioButton();
             this.label7 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.radioButton6 = new System.Windows.Forms.RadioButton();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -101,7 +99,7 @@ namespace 任务发布系统
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(23, 44);
+            this.radioButton2.Location = new System.Drawing.Point(23, 37);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(41, 16);
             this.radioButton2.TabIndex = 2;
@@ -112,7 +110,7 @@ namespace 任务发布系统
             // radioButton3
             // 
             this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(23, 80);
+            this.radioButton3.Location = new System.Drawing.Point(23, 72);
             this.radioButton3.Name = "radioButton3";
             this.radioButton3.Size = new System.Drawing.Size(41, 16);
             this.radioButton3.TabIndex = 3;
@@ -127,6 +125,7 @@ namespace 任务发布系统
             this.richTextBox1.Size = new System.Drawing.Size(369, 164);
             this.richTextBox1.TabIndex = 4;
             this.richTextBox1.Text = "";
+            this.richTextBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBox1_KeyDown);
             // 
             // label1
             // 
@@ -174,13 +173,6 @@ namespace 任务发布系统
             this.label5.TabIndex = 9;
             this.label5.Text = "时限(具体日期）";
             // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(570, 149);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(142, 21);
-            this.textBox1.TabIndex = 10;
-            // 
             // radioButton4
             // 
             this.radioButton4.AutoSize = true;
@@ -218,15 +210,7 @@ namespace 任务发布系统
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(100, 21);
             this.textBox2.TabIndex = 15;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(580, 186);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(107, 12);
-            this.label6.TabIndex = 16;
-            this.label6.Text = "（格式yyyy-MM-dd)";
+            this.textBox2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox2_KeyDown);
             // 
             // panel1
             // 
@@ -260,15 +244,21 @@ namespace 任务发布系统
             this.panel2.Size = new System.Drawing.Size(304, 55);
             this.panel2.TabIndex = 4;
             // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Location = new System.Drawing.Point(570, 149);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(152, 21);
+            this.dateTimePicker1.TabIndex = 18;
+            // 
             // pquest
             // 
             this.ClientSize = new System.Drawing.Size(745, 343);
+            this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.label6);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label3);
@@ -292,6 +282,7 @@ namespace 任务发布系统
         private void Form4_Load_1(object sender, EventArgs e)
         {
             label3.Text = login.id.uid;
+            textBox2.Text = "0";
         }
 
         private void button1_Click_1(object sender, EventArgs e)
@@ -315,9 +306,9 @@ namespace 任务发布系统
 
             if (radioButton4.Checked == true)
             {
-                type = "Single";
+                type = 1;
             }
-            else type = "Party";
+            else type =2;
 
             int m = Convert.ToInt32(textBox2.Text);
             if (tag == "2" && m < 30) MessageBox.Show("报酬至少为30");
@@ -335,7 +326,7 @@ namespace 任务发布系统
                 try
                 {
                     strSql = "insert into Questview(pid,ptext,qtag,qemp,ptime,ctime,state,reward) values('" + login.id.uid + "','";
-                    strSql += richTextBox1.Text + "','0','" + type + "','" + ptime + "','" + textBox1.Text + "','" + tag + "','" + textBox2.Text + "')";
+                    strSql += richTextBox1.Text + "','0','" + type + "',NULL,'" + ptime + "','" + textBox1.Text + "','" + tag + "','" + textBox2.Text + "')";
                     strSql1 = string.Format("select pmoney from costomer where id = '{0}'", login.id.uid);
 
                 }
@@ -414,5 +405,31 @@ namespace 任务发布系统
                 textBox2.Text = "100";
             }
         }
+
+        private void textBox2_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)//如果输入的是回车键  
+            {
+                this.button1_Click_1(sender, e);//触发button事件  
+            }  
+        }
+
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)//如果输入的是回车键  
+            {
+                this.button1_Click_1(sender, e);//触发button事件  
+            }  
+        }
+
+        private void richTextBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)//如果输入的是回车键  
+            {
+                this.button1_Click_1(sender, e);//触发button事件  
+            }  
+        }
+
+
     }
 }

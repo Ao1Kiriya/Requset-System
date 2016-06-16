@@ -202,7 +202,7 @@ namespace 任务发布系统
             strSQL += "','" ;//是否被选中
            
             strSQL += "',null)";
-            MessageBox.Show(strSQL);
+            //MessageBox.Show(strSQL);
             
             int result;
             string str1, str2;
@@ -250,7 +250,9 @@ namespace 任务发布系统
                                 if (n > 0)
                                 {
                                     MessageBox.Show("成功插入数据");
+                                    taskinfo_Load();
                                 }
+                                
                             }
                             catch (Exception ex)
                             {
@@ -260,13 +262,14 @@ namespace 任务发布系统
                             {
                                 if (conn != null) conn.Close();
                                 command.Dispose();
+                    taskinfo_Load();
                             } 
             }
             else
                 MessageBox.Show("您没有足够的资本来接受这个任务");
-           
-            
-        
+
+
+          
                 
             
         }
@@ -291,7 +294,7 @@ namespace 任务发布系统
             strSQL += "','";//是否被选中
             strSQL += "','"+teamName;
             strSQL+="')";
-            MessageBox.Show(strSQL);
+            //MessageBox.Show(strSQL);
 
             int result;
             string str1, str2;
@@ -364,10 +367,12 @@ namespace 任务发布系统
                 {
                     if (conn != null) conn.Close();
                     command.Dispose();
+                    taskinfo_Load();
                 }
             }
             else
                 MessageBox.Show("您的团队没有足够的资本来接受这个任务");
+            
         }
 
         private void button3_Click(object sender, EventArgs e)//选择最终方案
@@ -441,6 +446,11 @@ namespace 任务发布系统
                     MessageBox.Show(ex.Message);
                 }
             }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
         
     }
