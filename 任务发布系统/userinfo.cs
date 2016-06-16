@@ -25,20 +25,22 @@ namespace 任务发布系统
         String strSQL3 = "";
         String strSQL4 = "";
         String strSQL5 = "";
+        string admin_id = "";
         private tasklist parent;
        // private DataGridViewRow s;
         string s;
         private DataSet dataset = null;
         private SqlDataAdapter DataAdapter = null;
-        public userinfo(string s,tasklist f)
+        public userinfo(string s,tasklist f, string id)
         {
             
-            this.s = s;
+            this.s = s;         
             parent = f;
+            admin_id = id;
             InitializeComponent();
 
             //textBox1.Text = s.Cells[4].Value.ToString();
-            textBox1.Text = s;
+            textBox1.Text = admin_id;
             textBox2.ReadOnly = true;
            // strSQL = "select name from costomer where costomer.id = " + textBox1.Text;
             conn = new SqlConnection("Data Source =(local);"
@@ -243,7 +245,7 @@ namespace 任务发布系统
         private void button4_Click(object sender, EventArgs e)
         {       
             this.Close();
-            tasklist f2 = new tasklist();
+            tasklist f2 = new tasklist(admin_id);
             f2.Show();
             f2.ShowDialog();
             
@@ -256,7 +258,7 @@ namespace 任务发布系统
 
         private void button4_Click_1(object sender, EventArgs e)
         {
-            tasklist f2 = new tasklist();
+            tasklist f2 = new tasklist(admin_id);
             f2.Show();
             this.Close();           
         }
@@ -273,8 +275,8 @@ namespace 任务发布系统
             string id = dataGridView3.Rows[a].Cells["Uid"].Value.ToString();
             string pid = dataGridView3.Rows[a].Cells["pid"].Value.ToString();
             Double addmoney = 0;
-            double demoney = 0;
-            double i = 0;
+            Double demoney = 0;
+            Double i = 0,j =0;
 
             strSQL = "select pmoney from costomer where  id = " + id;                     
             SqlCommand cmd = new SqlCommand(strSQL, conn);
@@ -286,21 +288,24 @@ namespace 任务发布系统
             }
             strSQL = "select pmoney from costomer where  id = " + pid ;
             cmd = new SqlCommand(strSQL, conn);
-            object obj1 = cmd.ExecuteScalar();
-            if (obj1 != null)
+            object ob = cmd.ExecuteScalar();
+            if (ob != null)
             {
-                double s = double.Parse(obj.ToString());
-                demoney = s - i ;
+                j = double.Parse(ob.ToString());
+                demoney = j - money ;
             }
-
-            strSQL = "UPDATE costomer SET pmoney = " + addmoney + "WHERE id = " + id + "UPDATE Questview SET state = 0 WHERE  qno = '" + p + "'" + "UPDATE costomer SET pmoney = " + demoney + "WHERE id  = " + pid;
-            //strSQL = "UPDATE Questview SET state = 0 WHERE  qno = '" + p + "'";
+            
+            strSQL = "UPDATE costomer SET pmoney = " + addmoney + "WHERE id = " + id + "UPDATE Questview SET state = 2 WHERE  qno = '" + p + "'" + "UPDATE costomer SET pmoney = " + demoney + "WHERE id  = " + pid;
+            
             cmd = new SqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = strSQL;         ;
             int n = cmd.ExecuteNonQuery();
             if (n > 0) MessageBox.Show("任务完成!");
-            
+
+            this.Close();
+            userinfo f5 = new userinfo(s, parent, admin_id);
+            f5.Show();
         }
     }
 }

@@ -90,7 +90,7 @@ namespace 任务发布系统
                             Ureward.Umoney=m;
                             login f1 = new login();
                             f1.Close();
-                            tasklist f2 = new tasklist();
+                            tasklist f2 = new tasklist(admin_id);
                             f2.ShowDialog();
                         }
                         else

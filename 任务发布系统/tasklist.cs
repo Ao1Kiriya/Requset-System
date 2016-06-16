@@ -16,15 +16,17 @@ namespace 任务发布系统
     {
         public int flag5 = -1;
         public int index = -1;
+        string admin_id = "";
         private string ConnecttionString = "Data Source =(local);"
    + "Initial Catalog = exchange;Persist Security Info = true;"
    + "Trusted_Connection=SSPI;";
     
         
         
-        public tasklist()
+        public tasklist(string id)
         {
             InitializeComponent();
+            admin_id = id;
         }
 
         private void richTextBox1_TextChanged(object sender, EventArgs e)
@@ -79,7 +81,7 @@ namespace 任务发布系统
             //    ShowDialog();
 
             //DataGridViewRow s = dataGridView1.Rows[index];
-            userinfo f5 = new userinfo(str, this);
+            userinfo f5 = new userinfo(str, this, admin_id);
             f5.ShowDialog();
             this.Hide();
         }
