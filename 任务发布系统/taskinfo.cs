@@ -207,7 +207,20 @@ namespace 任务发布系统
             int result;
             string str1, str2;
             str1 = textBox4.Text;
-            str2 = login.Ureward.Umoney;
+
+            string Usermoney = string.Format("select pmoney from costomer where id  ='{0}'", UserID);
+
+            SqlCommand command1 = null;
+            command1 = new SqlCommand();
+            command1.Connection = conn;
+            command1.CommandText = Usermoney;
+            conn.Open();
+            SqlDataReader sdr = command1.ExecuteReader();//cmd 是sqlcommand
+            sdr.Read();
+            string tm = sdr["pmoney"].ToString();
+            conn.Close();
+
+            str2 = tm;
             decimal s2 =0;
             decimal s1 =1;
             if (textBox4.Text == "拥有金额为100以上")
@@ -301,9 +314,7 @@ namespace 任务发布系统
             str1 = textBox4.Text;
           
             string teammoney = string.Format("select pmoney from party where pname ='{0}'", teamName);
-            //SqlCommand command3 = new SqlCommand(teammoney, conn);
-            //string tm = Convert.ToString(command3.ExecuteScalar());
-
+            
             SqlCommand command = null;
             command = new SqlCommand();
             command.Connection = conn;
@@ -372,8 +383,11 @@ namespace 任务发布系统
             }
             else
                 MessageBox.Show("您的团队没有足够的资本来接受这个任务");
-            
         }
+
+
+
+
 
         private void button3_Click(object sender, EventArgs e)//选择最终方案
         {
@@ -387,11 +401,18 @@ namespace 任务发布系统
             dataGridView1.Rows[index].Selected = true;
             try
             {
-                strSql = "update planlist set selected =1,checked = 1 where qNo=" +  textBox1.Text;
+                strSql = "update planlist set selected =1,checked = 1 where qNo= " +  textBox7.Text;
                 strSql += "and issuer = " + this.dataGridView1.Rows[index].Cells[1].Value.ToString();
                 strSQL1 = "update questview set state = 1 ";
                 strSQL1+=", uid= "+ this.dataGridView1.Rows[index].Cells[1].Value.ToString();
-                strSQL1 += " where qno =" + textBox1.Text;
+                bool isEmpty = (this.dataGridView1.Rows[index].Cells[5].Value.ToString().Length == 0);
+                if(isEmpty){
+                    ;
+                }
+                else
+                    strSQL1 += ",qemp= '" + this.dataGridView1.Rows[index].Cells[5].Value.ToString()+"'";
+                
+                strSQL1 += " where qno = " + textBox7.Text;
             }
             catch (Exception ex)
             {
@@ -406,14 +427,15 @@ namespace 任务发布系统
             {
                 if (login.id.uid == textBox1.Text)
                 {
+                    conn.Open();
                     command = new SqlCommand();
                     command.Connection = conn;
                     command.CommandText = strSql;
-                    conn.Open();
+                    
                     int n = command.ExecuteNonQuery();
                     if (n > 0) { 
-                        MessageBox.Show("成功更新数据，有" + n.ToString() + "行受到更新！");
-                        flag = 1;
+                        MessageBox.Show("选择成功");
+                        flag = 1;//如果先择成功falg=1
                     }
 
                     
@@ -430,7 +452,7 @@ namespace 任务发布系统
             {
                 if (conn != null) conn.Close();
             }
-            if (flag == 1)
+            if (flag == 1)//如果选择成功，则修改questview中 接收人和任务状态
             {
                 try
                 {
@@ -439,7 +461,7 @@ namespace 任务发布系统
                     command1.CommandText = strSQL1;
                     conn.Open();
                     int m = command1.ExecuteNonQuery();
-                    if (m > 0) MessageBox.Show("成功更新数据，有" + m.ToString() + "行受到更新！");
+                    if (m > 0) MessageBox.Show("成功修改questview中 接收人和任务状态");
                 }
                 catch (Exception ex)
                 {

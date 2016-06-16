@@ -129,7 +129,7 @@ namespace 任务发布系统
                     dataset.Dispose();
                 }
 
-                strSQL5 = "select qno,Ptext,Uid,Qtag,Ptime,Reward ,pid from Questview where state = '1' and Pid = " + textBox1.Text;
+                strSQL5 = "select qno,Ptext,Uid,Qtag,Ptime,Reward ,pid from Questview where state = '1' and uid = " + textBox1.Text;
                 dataset = new DataSet();
                 conn = new SqlConnection(ConnectionString);
                 try

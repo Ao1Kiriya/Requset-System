@@ -28,13 +28,13 @@ namespace 任务发布系统
         private Button button1;
         private Label label5;
         private RadioButton radioButton4;
-        private RadioButton radioButton5;
         private Label label7;
         private TextBox textBox2;
         private Panel panel1;
         private Panel panel2;
         private RadioButton radioButton6;
         private DateTimePicker dateTimePicker1;
+        private RadioButton radioButton5;
         private SqlConnection conn = null;
         public pquest()
         {
@@ -63,13 +63,13 @@ namespace 任务发布系统
             this.button1 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.radioButton4 = new System.Windows.Forms.RadioButton();
-            this.radioButton5 = new System.Windows.Forms.RadioButton();
             this.label7 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.radioButton6 = new System.Windows.Forms.RadioButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.radioButton5 = new System.Windows.Forms.RadioButton();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -156,9 +156,9 @@ namespace 任务发布系统
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(207, 308);
+            this.button1.Location = new System.Drawing.Point(612, 269);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(100, 33);
             this.button1.TabIndex = 8;
             this.button1.Text = "发布";
             this.button1.UseVisualStyleBackColor = true;
@@ -183,17 +183,6 @@ namespace 任务发布系统
             this.radioButton4.TabStop = true;
             this.radioButton4.Text = "个人";
             this.radioButton4.UseVisualStyleBackColor = true;
-            // 
-            // radioButton5
-            // 
-            this.radioButton5.AutoSize = true;
-            this.radioButton5.Location = new System.Drawing.Point(204, 22);
-            this.radioButton5.Name = "radioButton5";
-            this.radioButton5.Size = new System.Drawing.Size(47, 16);
-            this.radioButton5.TabIndex = 13;
-            this.radioButton5.TabStop = true;
-            this.radioButton5.Text = "团队";
-            this.radioButton5.UseVisualStyleBackColor = true;
             // 
             // label7
             // 
@@ -250,6 +239,18 @@ namespace 任务发布系统
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(152, 21);
             this.dateTimePicker1.TabIndex = 18;
+            // 
+            // radioButton5
+            // 
+            this.radioButton5.AutoSize = true;
+            this.radioButton5.Location = new System.Drawing.Point(204, 22);
+            this.radioButton5.Name = "radioButton5";
+            this.radioButton5.Size = new System.Drawing.Size(47, 16);
+            this.radioButton5.TabIndex = 13;
+            this.radioButton5.TabStop = true;
+            this.radioButton5.Text = "团队";
+            this.radioButton5.UseVisualStyleBackColor = true;
+            this.radioButton5.Visible = false;
             // 
             // pquest
             // 
@@ -326,7 +327,8 @@ namespace 任务发布系统
                 try
                 {
                     strSql = "insert into Questview(pid,ptext,qtag,qemp,ptime,ctime,state,reward) values('" + login.id.uid + "','";
-                    strSql += richTextBox1.Text + "','0','" + type + "',NULL,'" + ptime + "','" + textBox1.Text + "','" + tag + "','" + textBox2.Text + "')";
+                    strSql += richTextBox1.Text + "','" +tag +"',"+ "NULL,'" + ptime + "','" + dateTimePicker1.Value.ToString("yyyy-MM-dd")  + "','0','" + textBox2.Text + "')";
+                    MessageBox.Show(strSql);
                     strSql1 = string.Format("select pmoney from costomer where id = '{0}'", login.id.uid);
 
                 }
@@ -344,13 +346,13 @@ namespace 任务发布系统
                     command = new SqlCommand(strSql, conn);
                     command1 = new SqlCommand(strSql1, conn);
                     int n = command.ExecuteNonQuery();
-                    command1.ExecuteNonQuery();
-                    money1 = Convert.ToInt32(command1.ExecuteScalar());
-                    money1 -= Convert.ToInt32(textBox2.Text);
-                    money = Convert.ToString(money1);
-                    string strSql2 = "update costomer set pmoney = '" + money + "' where id = '" + login.id.uid + "'";
-                    command2 = new SqlCommand(strSql2, conn);
-                    int k = command2.ExecuteNonQuery();
+                   int k= command1.ExecuteNonQuery();
+                    //money1 = Convert.ToInt32(command1.ExecuteScalar());
+                    //money1 -= Convert.ToInt32(textBox2.Text);
+                    //money = Convert.ToString(money1);
+                    //string strSql2 = "update costomer set pmoney = '" + money + "' where id = '" + login.id.uid + "'";
+                    //command2 = new SqlCommand(strSql2, conn);
+                    //int k = command2.ExecuteNonQuery();
 
                     if (k > 0) MessageBox.Show("发布成功！", "提示：");
                 }
